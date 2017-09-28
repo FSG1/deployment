@@ -1,65 +1,51 @@
 version: '2'
 
 networks:
-  nulap:
+  fmms:
     driver: bridge
 
 services:
 
-  phpmyadmin:
+  database:
     restart: always
-    image: phpmyadmin/phpmyadmin:latest
+    build: database
     ports:
-       - "28392:80"
+      - "5432:5432"
+    expose:
+      - 5432
     env_file:
       - variables.env
     networks:
-      - nulap
+      - fmms
 
-  redis:
+  backend:
     restart: always
-    image: redis:alpine
-    expose:
-      - 6379
-    volumes:
-      - redis:/data
-    networks:
-      - nulap
-
-#  elasticsearch:
-#    image: elasticsearch:alpine
-#    restart: always
-#    expose:
-#      - "9200"
-#      - "9300"
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#    env_file:
-#      - variables.env
-#    volumes:
-#      - esdata:/usr/share/elasticsearch/data
-#    networks:
-#      - nulap
-
-  nulap:
-    image: lukeelten/nulap:latest
-    restart: always
+    build: backend
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
     expose:
       - 80
-      - 443
-    ports:
-      - "28390:80"
-    depends_on:
-      - redis
-#      - elasticsearch
     env_file:
       - variables.env
     networks:
-      - nulap
+      - fmms
+
+  frontend:
+    restart: always
+    build: frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
+    expose:
+      - 4200
+    env_file:
+      - variables.env
+    networks:
+      - fmms
 
 volumes:
-  redis:
-    driver: local
-  esdata:
+  postgres:
     driver: local
