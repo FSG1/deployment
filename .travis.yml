@@ -1,0 +1,17 @@
+
+dist: trusty
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker-compose pull
+  - docker-compose build
+
+script:
+  - docker-compose up -d
+  - docker-compose down
+
+notifications:
+  email: false
