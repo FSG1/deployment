@@ -5,7 +5,6 @@ networks:
     driver: bridge
 
 services:
-
   database:
     restart: always
     build: database
@@ -31,23 +30,28 @@ services:
       - 8080
     env_file:
       - variables.env
+    volumes:
+      - maven:/root/.m2
     networks:
       - fmms
 
-#  frontend:
-#    restart: always
-#    build: frontend
-#    depends_on:
-#      - backend
-#    ports:
-#      - "4200:4200"
-#    expose:
-#      - 4200
-#    env_file:
-#      - variables.env
-#    networks:
-#      - fmms
+  frontend:
+    restart: always
+    build: frontend
+    depends_on:
+      - backend
+    ports:
+      - 4200:8080
+    expose:
+      - 8080
+      - 4200
+    env_file:
+      - variables.env
+    networks:
+      - fmms
 
 volumes:
   postgres:
+    driver: local
+  maven:
     driver: local
