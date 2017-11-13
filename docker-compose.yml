@@ -30,6 +30,8 @@ services:
       - 4200
     networks:
       - fmms
+    env:
+      - APPLICATION_ENV=staging
 
 volumes:
   maven:
