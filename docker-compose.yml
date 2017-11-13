@@ -28,7 +28,7 @@ services:
   frontend:
     restart: always
     build: frontend
-    command: ["--env=staging", " --live-reload=false"]
+    command: ["--env=staging", " --no-live-reload", "--aot", "--build-optimizer"]
     depends_on:
       - backend
     ports:
@@ -38,8 +38,6 @@ services:
     networks:
       fmms:
         ipv4_address: 172.16.0.2
-    environment:
-      - APPLICATION_ENV=staging
 
 volumes:
   maven:
