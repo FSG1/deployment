@@ -22,7 +22,7 @@ services:
       - maven:/root/.m2
     networks:
       fmms:
-          ipv4_address: 172.16.0.3
+        ipv4_address: 172.16.0.3
 
   frontend:
     restart: always
@@ -34,9 +34,9 @@ services:
       - 24200:4200
     expose:
       - 4200
-      networks:
-        fmms:
-            ipv4_address: 172.16.0.2
+    networks:
+      fmms:
+        ipv4_address: 172.16.0.2
     environment:
       - APPLICATION_ENV=staging
 
