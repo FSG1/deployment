@@ -6,7 +6,6 @@ networks:
     ipam:
       driver: default
       config:
-        -
         subnet: 172.16.0.0/24
 
 services:
@@ -22,7 +21,7 @@ services:
     volumes:
       - maven:/root/.m2
     networks:
-      - fmms:
+      fmms:
           ipv4_address: 172.16.0.3
 
   frontend:
@@ -36,7 +35,7 @@ services:
     expose:
       - 4200
       networks:
-        - fmms:
+        fmms:
             ipv4_address: 172.16.0.2
     environment:
       - APPLICATION_ENV=staging
