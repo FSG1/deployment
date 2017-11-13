@@ -5,27 +5,13 @@ networks:
     driver: bridge
 
 services:
-  database:
-    restart: always
-    build: database
-    ports:
-      - "5432:5432"
-    expose:
-      - 5432
-    env_file:
-      - variables.env
-    volumes:
-      - postgres:/var/lib/postgresql
-    networks:
-      - fmms
-
   backend:
     restart: always
     build: backend
     depends_on:
       - database
     ports:
-      - "8080:8080"
+      - 28080:8080
     expose:
       - 8080
     env_file:
@@ -41,14 +27,12 @@ services:
     depends_on:
       - backend
     ports:
-      - 4200:4200
+      - 24200:4200
     expose:
       - 4200
     networks:
       - fmms
 
 volumes:
-  postgres:
-    driver: local
   maven:
     driver: local
