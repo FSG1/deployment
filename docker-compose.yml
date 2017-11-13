@@ -3,6 +3,11 @@ version: '2'
 networks:
   fmms:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+        subnet: 172.16.0.0/24
 
 services:
   backend:
@@ -17,20 +22,22 @@ services:
     volumes:
       - maven:/root/.m2
     networks:
-      - fmms
+      - fmms:
+          ipv4_address: 172.16.0.3
 
   frontend:
     restart: always
     build: frontend
-    command: ["--env=staging"]
+    command: ["--env=staging", " --live-reload=false"]
     depends_on:
       - backend
     ports:
       - 24200:4200
     expose:
       - 4200
-    networks:
-      - fmms
+      networks:
+        - fmms:
+            ipv4_address: 172.16.0.2
     environment:
       - APPLICATION_ENV=staging
 
