@@ -30,7 +30,7 @@ services:
       - 4200
     networks:
       - fmms
-    env:
+    environment:
       - APPLICATION_ENV=staging
 
 volumes:
