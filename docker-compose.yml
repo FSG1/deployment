@@ -28,7 +28,7 @@ services:
   frontend:
     restart: always
     build: frontend
-    command: ["--env=staging", " --no-live-reload", "--aot", "--build-optimizer"]
+    command: ["--env=staging", " --no-live-reload", "--aot", "--build-optimizer", "--no-watch"]
     depends_on:
       - backend
     ports:
