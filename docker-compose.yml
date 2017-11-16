@@ -13,8 +13,8 @@ services:
   backend:
     restart: always
     build: backend
-    ports:
-      - 28080:8080
+#    ports:
+#      - 28080:8080
     expose:
       - 8080
     env_file:
@@ -28,11 +28,11 @@ services:
   frontend:
     restart: always
     build: frontend
-    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
+    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org"]
     depends_on:
       - backend
-    ports:
-      - 24200:4200
+#    ports:
+#      - 24200:4200
     expose:
       - 4200
     networks:
