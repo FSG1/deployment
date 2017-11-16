@@ -28,7 +28,7 @@ services:
   frontend:
     restart: always
     build: frontend
-    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", '--public-host="modulemanagement.fontysvenlo.org"', '--base-href="/frontend/"']
+    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--base-href", "/frontend/"]
     depends_on:
       - backend
     ports:
