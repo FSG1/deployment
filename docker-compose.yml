@@ -3,29 +3,18 @@ version: '2'
 networks:
   fmms:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 172.16.0.0/24
 
 services:
-  database:
-    restart: always
-    build: database
-    ports:
-      - "5432:5432"
-    expose:
-      - 5432
-    env_file:
-      - variables.env
-    volumes:
-      - postgres:/var/lib/postgresql
-    networks:
-      - fmms
-
   backend:
     restart: always
     build: backend
-    depends_on:
-      - database
-    ports:
-      - "8080:8080"
+#    ports:
+#      - 28080:8080
     expose:
       - 8080
     env_file:
@@ -33,22 +22,23 @@ services:
     volumes:
       - maven:/root/.m2
     networks:
-      - fmms
+      fmms:
+        ipv4_address: 172.16.0.3
 
   frontend:
     restart: always
     build: frontend
+    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
     depends_on:
       - backend
-    ports:
-      - 4200:4200
+#    ports:
+#      - 24200:4200
     expose:
       - 4200
     networks:
-      - fmms
+      fmms:
+        ipv4_address: 172.16.0.2
 
 volumes:
-  postgres:
-    driver: local
   maven:
     driver: local
