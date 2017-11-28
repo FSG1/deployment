@@ -1,9 +1,0 @@
-[submodule "database"]
-	path = database
-	url = https://github.com/FSG1/database.git
-[submodule "backend"]
-	path = backend
-	url = https://github.com/FSG1/backend.git
-[submodule "frontend"]
-	path = frontend
-	url = https://github.com/FSG1/frontend.git
