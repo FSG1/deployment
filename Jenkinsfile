@@ -1,12 +1,3 @@
-def branches = [:]
-branches["backend"] = {
-  build job: '../backend/master', wait: true
-}
-
-branches["frontend"] = {
-  build job: '../frontend/master', wait: true
-}
-
 pipeline {
     agent any
 
@@ -18,9 +9,19 @@ pipeline {
         }
 
         stage ('Build Backend & Frontend') {
-            steps {
-              parallel branches
+          parallel {
+            stage ('Backend') {
+              steps {
+                build job: '../backend/master', wait: true
+              }
             }
+
+            stage ('Frontend') {
+              steps {
+                build job: '../frontend/master', wait: true
+              }
+            }
+          }
         }
 
         stage('Pull Images') {
