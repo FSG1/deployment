@@ -28,7 +28,7 @@ services:
   frontend:
     restart: always
     image: 172.16.0.10:5000/frontend
-    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
+    command: ["--env=staging", "--no-live-reload", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
     depends_on:
       - backend
 #    ports:
@@ -44,6 +44,8 @@ services:
     image: registry:2
     expose:
       - 5000
+    volumes:
+      - registry:/var/lib/registry
     networks:
       fmms:
         ipv4_address: 172.16.0.10
@@ -64,4 +66,6 @@ volumes:
   maven:
     driver: local
   jenkins:
+    driver: local
+  registry:
     driver: local
