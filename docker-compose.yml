@@ -12,7 +12,7 @@ networks:
 services:
   backend:
     restart: always
-    image: 172.16.0.10:5000/backend
+    image: 172.16.0.10:5000/backend:master
 #    ports:
 #      - 28080:8080
     expose:
@@ -27,7 +27,7 @@ services:
 
   frontend:
     restart: always
-    image: 172.16.0.10:5000/frontend
+    image: 172.16.0.10:5000/frontend:master
     command: ["--env=staging", "--no-live-reload", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
     depends_on:
       - backend
