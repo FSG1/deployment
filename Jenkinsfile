@@ -17,32 +17,24 @@ pipeline {
         stage ('Build Projects') {
           parallel {
             stage ('Backend') {
-              stages {
-                stage ('Build') {
-                  steps {
-                    build job: '../backend/master', wait: true
-                  }
-                }
-
-                stage ('Start') {
-                  steps {
-                    sh 'docker-compose -p fmms pull backend'
-                    sh 'docker-compose -p fmms up -d backend'
-                  }
-                }
+              steps {
+                build job: '../backend/master', wait: true
               }
             }
 
             stage ('Frontend') {
-              stages {
-                stage ('Build') {
-                  steps {
-                    build job: '../frontend/master', wait: true
-                  }
-                }
+              steps {
+                build job: '../frontend/master', wait: true
               }
             }
           }
+        }
+
+        stage('Start Backend') {
+            steps {
+                sh 'docker-compose -p fmms pull backend'
+                sh 'docker-compose -p fmms up -d backend'
+            }
         }
 
         stage('Start Frontend') {
