@@ -8,17 +8,15 @@ pipeline {
             }
         }
 
-        if (env.BRANCH_NAME == "master") {
-          stage ('Build Backend') {
-            steps {
-              build job: '../backend/master', wait: true
-            }
+        stage ('Build Backend') {
+          steps {
+            build job: '../backend/master', wait: true
           }
+        }
 
-          stage ('Build Frontend') {
-            steps {
-              build job: '../frontend/master', wait: true
-            }
+        stage ('Build Frontend') {
+          steps {
+            build job: '../frontend/master', wait: true
           }
         }
 
