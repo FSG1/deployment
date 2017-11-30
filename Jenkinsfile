@@ -22,7 +22,7 @@ pipeline {
 
         stage('Recreate Frontend') {
             steps {
-                sh 'docker-compose -p fmms up-d frontend'
+                sh 'docker-compose -p fmms up -d frontend'
             }
         }
     }
