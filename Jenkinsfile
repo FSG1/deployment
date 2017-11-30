@@ -9,7 +9,6 @@ pipeline {
         }
 
         stage ('Build Backend & Frontend') {
-          steps {
             def branches = [:]
             branches["backend"] = {
               build job: '../backend/master', wait: true
@@ -19,7 +18,6 @@ pipeline {
               build job: '../frontend/master', wait: true
             }
             parallel branches
-          }
         }
 
         stage('Pull Images') {
