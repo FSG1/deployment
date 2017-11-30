@@ -1,14 +1,14 @@
+def branches = [:]
+branches["backend"] = {
+  build job: '../backend/master', wait: true
+}
+
+branches["frontend"] = {
+  build job: '../frontend/master', wait: true
+}
+
 pipeline {
     agent any
-
-    def branches = [:]
-    branches["backend"] = {
-      build job: '../backend/master', wait: true
-    }
-
-    branches["frontend"] = {
-      build job: '../frontend/master', wait: true
-    }
 
     stages {
         stage ('Checkout') {
