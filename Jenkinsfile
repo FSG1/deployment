@@ -8,15 +8,17 @@ pipeline {
             }
         }
 
-        stage ('Build Backend') {
+        stage ('Build Backend & Frontend') {
           steps {
-            build job: '../backend/master', wait: true
-          }
-        }
+            def branches = [:]
+            branches["backend"] = {
+              build job: '../backend/master', wait: true
+            }
 
-        stage ('Build Frontend') {
-          steps {
-            build job: '../frontend/master', wait: true
+            branches["frontend"] = {
+              build job: '../frontend/master', wait: true
+            }
+            parallel branches
           }
         }
 
