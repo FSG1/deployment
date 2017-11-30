@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage ('Build Backend & Frontend') {
+        stage ('Build Images') {
           parallel {
             stage ('Backend') {
               steps {
