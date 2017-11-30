@@ -17,7 +17,9 @@ pipeline {
             branches["frontend"] = {
               build job: '../frontend/master', wait: true
             }
-            parallel branches
+            steps {
+              parallel branches
+            }
         }
 
         stage('Pull Images') {
