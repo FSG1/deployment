@@ -12,7 +12,7 @@ networks:
 services:
   backend:
     restart: always
-    build: backend
+    image: 172.16.0.10:5000/backend
 #    ports:
 #      - 28080:8080
     expose:
@@ -27,8 +27,8 @@ services:
 
   frontend:
     restart: always
-    build: frontend
-    command: ["--env=staging", "--no-live-reload", "--aot", "--build-optimizer", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
+    image: 172.16.0.10:5000/frontend
+    command: ["--env=staging", "--no-live-reload", "--no-watch", "--public-host", "modulemanagement.fontysvenlo.org", "--proxy-config", "proxy.json"]
     depends_on:
       - backend
 #    ports:
@@ -39,6 +39,33 @@ services:
       fmms:
         ipv4_address: 172.16.0.2
 
+  registry:
+    restart: always
+    image: registry:2
+    expose:
+      - 5000
+    volumes:
+      - registry:/var/lib/registry
+    networks:
+      fmms:
+        ipv4_address: 172.16.0.10
+
+  jenkins:
+    restart: unless-stopped
+    build: jenkins
+    ports:
+      - 28080:8080
+    volumes:
+      - jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      fmms:
+        ipv4_address: 172.16.0.11
+
 volumes:
   maven:
+    driver: local
+  jenkins:
+    driver: local
+  registry:
     driver: local
