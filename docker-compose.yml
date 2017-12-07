@@ -52,7 +52,7 @@ services:
 
   jenkins:
     restart: unless-stopped
-    build: jenkins
+    image: lukeelten/jenkins-docker
     ports:
       - 28080:8080
     volumes:
