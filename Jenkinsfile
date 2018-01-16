@@ -8,12 +8,6 @@ pipeline {
             }
         }
 
-        stage ('Stop Services') {
-          steps {
-            sh 'docker-compose -p fmms stop backend frontend'
-          }
-        }
-
         stage ('Build Projects') {
           parallel {
             stage ('Backend') {
@@ -27,6 +21,12 @@ pipeline {
                 build job: '../frontend/master', wait: true
               }
             }
+          }
+        }
+
+        stage ('Stop Services') {
+          steps {
+            sh 'docker-compose -p fmms stop backend frontend'
           }
         }
 
